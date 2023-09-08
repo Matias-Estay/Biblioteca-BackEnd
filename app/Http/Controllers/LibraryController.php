@@ -43,4 +43,27 @@ class LibraryController extends Controller
         return 'Ok';
     }
     
+    public function GET_Collections(Request $data)
+    {
+        $user = Auth::user();
+        $response = DB::table('collections')->select(DB::raw("REPLACE(name,'\"','') as name, id, id_api"))->where('id_user','=',$user->id)->get();
+        return $response;
+    }
+
+    public function POST_AskQuestion(Request $data)
+    {
+        $user = Auth::user();
+        $documents = DB::table('documents')->select('id_api')->where('id_collection','=',$data->id_api)->get();
+        $documents_final = [];
+        for($i = 0;$i<sizeof($documents);$i++){
+            array_push($documents_final,$documents[$i]->id_api);
+        }
+        $response = Http::withToken(env('CHATDOC_KEY',''))->post('https://api.chatdoc.com/api/v1/questions/multi-documents',
+        [
+            'question' => $data->question,
+            'upload_ids' => $documents_final
+        ]
+        );
+        return $response;
+    }
 }
