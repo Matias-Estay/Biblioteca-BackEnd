@@ -1,0 +1,29 @@
+pipeline {
+    agent 'any'
+    tools { nodejs "nodejs" }
+    stages {
+        stage('Pull') {
+            steps {
+                dir('C:\\Aplicaciones\\Apache24\\htdocs\\Biblioteca-digital\\Biblioteca-Backend\\') {
+                    bat "git config --global --add safe.directory C:/Aplicaciones/Apache24/htdocs/Biblioteca-digital/Biblioteca-Backend"
+                    bat "git pull"
+                }
+            }
+        }
+        stage('Install') {
+            steps {
+                dir('C:\\Aplicaciones\\Apache24\\htdocs\\Biblioteca-digital\\Biblioteca-Backend') {
+                    bat "npm install"
+                    bat "composer install"
+                }
+            }
+        }
+        stage('build'){
+            steps {
+                dir('C:\\Aplicaciones\\Apache24\\htdocs\\Biblioteca-digital\\Biblioteca-Backend') {
+                    bat "npm run build"
+                }
+            }
+        }
+    }  
+}
