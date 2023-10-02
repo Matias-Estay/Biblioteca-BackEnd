@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use DB;
 
 class AuthController extends Controller
 {
@@ -22,12 +23,19 @@ class AuthController extends Controller
     }
 
     public function loggedIn(Request $request){
-        if($request->user()){
+        $user = Auth::user();
+        if($user){
             return true;
         }else{
             return false;
         }
-        return false;
+    }
+
+    public function GET_UserType(Request $request){
+        $user = Auth::user();
+        $type = DB::table('user_types')->select("user_types.type")->join('users','users.type','=','user_types.id')->
+        where('users.id','=',$user->type)->get();
+        return $type[0];
     }
 
     public function logout(Request $request)
@@ -35,9 +43,4 @@ class AuthController extends Controller
         $request->session()->invalidate();
     }
 
-    public function GET_quota(Request $request)
-    {
-        $response = Http::withToken(env('CHATDOC_KEY',''))->get('https://api.chatdoc.com/api/v1/users/quota');
-        return $response;
-    }
 }
