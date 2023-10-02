@@ -47,7 +47,7 @@ class LibraryController extends Controller
     {
         set_time_limit(0);
         $user = Auth::user();
-        foreach ($data->file('files') as $file) {
+        foreach ($request->file('files') as $file) {
             $response_doc = Http::attach('file', file_get_contents($file), $file->getClientOriginalName())->withHeaders([
                 'Authorization' => 'Bearer ' . env('CHATDOC_KEY',''),
             ])->post('https://api.chatdoc.com/api/v1/documents/upload',['collection_id'=> $request->id_api]);
