@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/quota', [LibraryController::class, 'GET
 Route::middleware('auth:sanctum')->get('/collectionDocuments', [LibraryController::class, 'GET_CollectionDocuments']);
 Route::middleware('auth:sanctum')->post('/careateCollection', [LibraryController::class, 'POST_Collection']);
 Route::middleware('auth:sanctum')->post('/DeleteDocument', [LibraryController::class, 'POST_DeleteDocument']);
-Route::middleware('auth:sanctum')->post('/UploadDocumentsCollection', [LibraryController::class, 'POST_DeleteDocument']);
+Route::middleware('auth:sanctum')->post('/UploadDocumentsCollection', [LibraryController::class, 'POST_UploadDocumentsCollection']);
 Route::middleware('auth:sanctum')->post('/ShareCollection', [LibraryController::class, 'POST_ShareCollection']);
 Route::middleware('auth:sanctum')->get('/collections', [LibraryController::class, 'GET_Collections']);
 Route::middleware('auth:sanctum')->post('/askQuestion', [LibraryController::class, 'POST_AskQuestion']);
