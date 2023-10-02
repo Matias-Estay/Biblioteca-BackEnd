@@ -26,7 +26,7 @@ Route::middleware('auth:sanctum')->post('/DeleteDocument', [LibraryController::c
 Route::middleware('auth:sanctum')->post('/UploadDocumentsCollection', [LibraryController::class, 'POST_UploadDocumentsCollection']);
 Route::middleware('auth:sanctum')->post('/ShareCollection', [LibraryController::class, 'POST_ShareCollection']);
 Route::middleware('auth:sanctum')->get('/collections', [LibraryController::class, 'GET_Collections']);
-Route::middleware('auth:sanctum')->post('/askQuestion', [LibraryController::class, 'POST_AskQuestion']);
+Route::middleware(['sharedmiddleware'])->post('/askQuestion', [LibraryController::class, 'POST_AskQuestion']);
 
 Route::get('/loggedIn', [AuthController::class, 'loggedIn']);
 Route::post('/login', [AuthController::class, 'login']);
