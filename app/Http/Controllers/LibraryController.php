@@ -25,6 +25,11 @@ class LibraryController extends Controller
             'id_user' => $user->id
             ]
         );
+        DB::table('shared')->insert(
+            ['id_collection' => $id,
+            'id_permission' => 2,
+            ]
+        );
         foreach ($data->file('files') as $file) {
             $response_doc = Http::attach('file', file_get_contents($file), $file->getClientOriginalName())->withHeaders([
                 'Authorization' => 'Bearer ' . env('CHATDOC_KEY',''),
